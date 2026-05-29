@@ -1,2 +1,79 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
+/* 📁 styles/theme.css */
+:root {
+  /* Light Mode (default) */
+  --bg-primary: #f6f7fb;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  
+  --text-primary: #0b1220;
+  --text-secondary: #4b5565;
+  --text-muted: #8b95a7;
+  
+  --border: #e5e7eb;
+  --border-hover: #c7cdd6;
+  
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
+  --accent-light: #e0e7ff;
+  
+  --danger: #e5484d;
+  --danger-hover: #c92a2a;
+  --danger-light: #fff1f2;
+  
+  --success: #22c55e;
+  --shadow: rgba(15, 23, 42, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark Mode */
+    --bg-primary: #0b1220;
+    --bg-secondary: #111827;
+    --bg-card: #111827;
+    
+    --text-primary: #f3f4f6;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    
+    --border: #1f2937;
+    --border-hover: #374151;
+    
+    --accent: #818cf8;
+    --accent-hover: #6366f1;
+    --accent-light: #312e81;
+    
+    --danger: #ff6b6b;
+    --danger-hover: #e5484d;
+    --danger-light: #2a1517;
+    
+    --success: #34d399;
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+}
+
+:root.dark {
+  --bg-primary: #0b1220;
+  --bg-secondary: #111827;
+  --bg-card: #111827;
+  
+  --text-primary: #f3f4f6;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  
+  --border: #1f2937;
+  --border-hover: #374151;
+  
+  --accent: #818cf8;
+  --accent-hover: #6366f1;
+  --accent-light: #312e81;
+  
+  --danger: #ff6b6b;
+  --danger-hover: #e5484d;
+  --danger-light: #2a1517;
+  
+  --success: #34d399;
+  --shadow: rgba(0, 0, 0, 0.35);
+}
