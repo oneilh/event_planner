@@ -7,3 +7,4 @@
 - Updated the "Create Event" button in the Navbar to have a gradient look and change colors dynamically in dark mode.
 - Replaced the custom SVG logo with a premium Lucide React `CalendarDays` icon.
 - Upgraded the primary accent color from a generic blue to a premium modern Indigo/Violet palette for both light and dark modes.
+- Polished the UI by completely redesigning `app/page.tsx` into a modern landing page, utilizing modern web guidance (glassmorphism, `@starting-style` entry animations, dynamic fluid grids, and `text-wrap: balance`).
