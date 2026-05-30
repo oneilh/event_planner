@@ -9,7 +9,7 @@ export default function Home() {
         <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[var(--accent)] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem] clip-path-polygon"></div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
+      <div className="w-full pb-24 pt-10 sm:pb-32 lg:flex lg:py-40">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8 animate-fade-in-up" style={{ animationDelay: '0ms' }}>
           <div className="mt-24 sm:mt-32 lg:mt-16">
             <a href="#" className="inline-flex space-x-6 rounded-full bg-[var(--accent-light)]/50 px-3 py-1 text-sm font-semibold leading-6 text-[var(--accent)] ring-1 ring-inset ring-[var(--accent)]/20 hover:ring-[var(--accent)]/40 transition-all hover:scale-105">
@@ -74,7 +74,7 @@ export default function Home() {
       </div>
 
       {/* Features Grid */}
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 pb-24">
+      <div className="w-full pb-24">
         <div className="mx-auto max-w-2xl lg:text-center animate-fade-in-up" style={{ animationDelay: '400ms' }}>
           <h2 className="text-base font-semibold leading-7 text-[var(--accent)]">Deploy faster</h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-[var(--text-primary)] sm:text-4xl text-balance">

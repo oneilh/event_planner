@@ -32,8 +32,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300">
         <ThemeProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
+          <div className="mx-auto flex min-h-screen w-[95%] flex-col md:w-[85%] lg:w-[70%]">
+            <Navbar />
+            <main className="flex-1">{children}</main>
+          </div>
         </ThemeProvider>
       </body>
     </html>
