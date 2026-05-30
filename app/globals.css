@@ -8,6 +8,11 @@
   --bg-secondary: #ffffff;
   --bg-card: #ffffff;
   
+  --bg-gradient: 
+    radial-gradient(at 20% 0%, rgba(139, 92, 246, 0.12) 0%, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(56, 189, 248, 0.12) 0%, transparent 50%);
+  
   --text-primary: #0b1220;
   --text-secondary: #4b5565;
   --text-muted: #8b95a7;
@@ -34,6 +39,11 @@
     --bg-secondary: #111827;
     --bg-card: #111827;
     
+    --bg-gradient: 
+      radial-gradient(at 10% 0%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
+      radial-gradient(at 90% 0%, rgba(217, 70, 239, 0.15) 0%, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.15) 0%, transparent 50%);
+    
     --text-primary: #f3f4f6;
     --text-secondary: #cbd5e1;
     --text-muted: #94a3b8;
@@ -58,6 +68,11 @@
   --bg-primary: #0b1220;
   --bg-secondary: #111827;
   --bg-card: #111827;
+  
+  --bg-gradient: 
+    radial-gradient(at 10% 0%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
+    radial-gradient(at 90% 0%, rgba(217, 70, 239, 0.15) 0%, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.15) 0%, transparent 50%);
   
   --text-primary: #f3f4f6;
   --text-secondary: #cbd5e1;
@@ -104,4 +119,12 @@
     opacity: 0;
     transform: translateY(20px);
   }
+}
+
+/* Global Artistic Mesh Background */
+body {
+  background-color: var(--bg-primary);
+  background-image: var(--bg-gradient);
+  background-attachment: fixed;
+  background-size: cover;
 }

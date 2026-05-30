@@ -32,7 +32,7 @@ export default function Navbar() {
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--accent)] to-violet-500 text-white shadow-md">
               <CalendarDays size={20} strokeWidth={2.5} />
             </div>
-            <span className="text-xl font-extrabold tracking-tight text-[var(--text-primary)]">
+            <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-[var(--text-primary)]">
               EventPlanner
             </span>
           </Link>
