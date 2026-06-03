@@ -1,60 +1,27 @@
 import Link from "next/link";
-// import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 export default async function Home() {
-  // Replace this array with your Prisma query later:
-  // const events = await prisma.event.findMany();
+  const fetchedEvents = await prisma.event.findMany();
   
-  const events = [
-    {
-      id: 1,
-      date: "24",
-      month: "Sept",
-      location: "San Francisco",
-      venue: "Golden Gate Pavilion",
-      organizer: "Visionary Arts Group",
-      title: "Summer Music Festival",
-      image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=800&auto=format&fit=crop",
+  const events = fetchedEvents.map(event => {
+    const eventDate = new Date(event.date);
+    const date = eventDate.getDate().toString();
+    const month = eventDate.toLocaleString('default', { month: 'short' });
+
+    return {
+      id: event.id,
+      date: date,
+      month: month,
+      location: event.location,
+      venue: event.venue,
+      organizer: event.organizer,
+      title: event.title,
+      image: event.imageUrl || "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=800&auto=format&fit=crop",
       dateClass: "bg-white/20 dark:bg-black/40 text-white border border-white/30",
-      attendees: 9
-    },
-    {
-      id: 2,
-      date: "25",
-      month: "Sept",
-      location: "San Francisco",
-      venue: "Arts and Culture Center",
-      organizer: "Visionary Arts Group",
-      title: "Spring Art Extravaganza",
-      image: "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=800&auto=format&fit=crop",
-      dateClass: "bg-white/20 dark:bg-black/40 text-white border border-white/30",
-      attendees: 5
-    },
-    {
-      id: 3,
-      date: "26",
-      month: "Sept",
-      location: "San Francisco",
-      venue: "Street Style Festival",
-      organizer: "Urban Fashion Collective",
-      title: "Trendy Threads Festival",
-      image: "https://images.unsplash.com/photo-1509319117193-57bab727e09d?q=80&w=800&auto=format&fit=crop",
-      dateClass: "bg-white/20 dark:bg-black/40 text-white border border-white/30",
-      attendees: 10
-    },
-    {
-      id: 4,
-      date: "27",
-      month: "Sept",
-      location: "Los Angeles",
-      venue: "Downtown Arena",
-      organizer: "Live Nation",
-      title: "Neon Nights Concert",
-      image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop",
-      dateClass: "bg-white/20 dark:bg-black/40 text-white border border-white/30",
-      attendees: 24
-    }
-  ];
+      attendees: event.attendeesCount
+    };
+  });
 
   return (
     <div className="py-10 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">

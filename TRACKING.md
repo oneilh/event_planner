@@ -21,3 +21,5 @@
 - Created `lib/prisma.ts` to export a Prisma Client singleton, preventing multiple instances from exhausting database connections in development.
 - Created `app/actions/event.ts` with a Next.js Server Action to create events using Prisma.
 - Updated `CreateEventModal.tsx` to include all Prisma `Event` model fields (title, organizer, venue, location, description, date, imageUrl) and connected it to the Server Action.
+- Created `prisma/seed.ts` script to populate the database with the initial 4 default events and configured `prisma.config.ts` and `package.json` to execute it using `tsx`.
+- Updated `app/page.tsx` to fetch events directly from the Prisma database using `prisma.event.findMany()` and map them to the existing UI layout.
