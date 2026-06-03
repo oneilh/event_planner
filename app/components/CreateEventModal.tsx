@@ -1,34 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useTransition } from "react";
+import { createEventAction } from "@/app/actions/event";
 
 type Props = {
   onClose: () => void;
 };
 
 export default function CreateEventModal({ onClose }: Props) {
-  const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
-  const [location, setLocation] = useState("");
-  const [description, setDescription] = useState("");
+  const [isPending, startTransition] = useTransition();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Connect to backend / Prisma
-    console.log({ title, date, location, description });
-    onClose();
+  const handleAction = (formData: FormData) => {
+    startTransition(async () => {
+      try {
+        await createEventAction(formData);
+        onClose();
+      } catch (error) {
+        console.error("Failed to create event:", error);
+      }
+    });
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm overflow-y-auto pt-10 pb-10">
       <div
-        className="relative mx-4 w-full max-w-lg rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-6 shadow-2xl"
+        className="relative mx-4 w-full max-w-lg rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-6 shadow-2xl my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-[var(--text-muted)] transition-colors hover:bg-[var(--bg-primary)] hover:text-[var(--text-primary)]"
+          disabled={isPending}
+          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-[var(--text-muted)] transition-colors hover:bg-[var(--bg-primary)] hover:text-[var(--text-primary)] disabled:opacity-50"
           aria-label="Close modal"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -45,83 +48,138 @@ export default function CreateEventModal({ onClose }: Props) {
         </p>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* Title */}
-          <div>
-            <label htmlFor="title" className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">
-              Event Title
-            </label>
-            <input
-              id="title"
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Summer Music Festival"
-              required
-              className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
-            />
-          </div>
+        <form action={handleAction} className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {/* Title */}
+            <div className="sm:col-span-2">
+              <label htmlFor="title" className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">
+                Event Title
+              </label>
+              <input
+                id="title"
+                name="title"
+                type="text"
+                placeholder="e.g. Summer Music Festival"
+                required
+                className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
+              />
+            </div>
 
-          {/* Date */}
-          <div>
-            <label htmlFor="date" className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">
-              Date
-            </label>
-            <input
-              id="date"
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-              className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2.5 text-sm text-[var(--text-primary)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
-            />
-          </div>
+            {/* Organizer */}
+            <div>
+              <label htmlFor="organizer" className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">
+                Organizer
+              </label>
+              <input
+                id="organizer"
+                name="organizer"
+                type="text"
+                placeholder="e.g. Acme Corp"
+                required
+                className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
+              />
+            </div>
 
-          {/* Location */}
-          <div>
-            <label htmlFor="location" className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">
-              Location
-            </label>
-            <input
-              id="location"
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="e.g. Central Park, New York"
-              required
-              className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
-            />
-          </div>
+            {/* Date */}
+            <div>
+              <label htmlFor="date" className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">
+                Date & Time
+              </label>
+              <input
+                id="date"
+                name="date"
+                type="datetime-local"
+                required
+                className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2.5 text-sm text-[var(--text-primary)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
+              />
+            </div>
 
-          {/* Description */}
-          <div>
-            <label htmlFor="description" className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">
-              Description
-            </label>
-            <textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Tell people about your event..."
-              rows={3}
-              className="w-full resize-none rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
-            />
+            {/* Venue */}
+            <div>
+              <label htmlFor="venue" className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">
+                Venue Name
+              </label>
+              <input
+                id="venue"
+                name="venue"
+                type="text"
+                placeholder="e.g. Central Park"
+                required
+                className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
+              />
+            </div>
+
+            {/* Location */}
+            <div>
+              <label htmlFor="location" className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">
+                Address / City
+              </label>
+              <input
+                id="location"
+                name="location"
+                type="text"
+                placeholder="e.g. New York, NY"
+                required
+                className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
+              />
+            </div>
+            
+            {/* Image URL */}
+            <div className="sm:col-span-2">
+              <label htmlFor="imageUrl" className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">
+                Image URL (Optional)
+              </label>
+              <input
+                id="imageUrl"
+                name="imageUrl"
+                type="url"
+                placeholder="https://example.com/image.jpg"
+                className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
+              />
+            </div>
+
+            {/* Description */}
+            <div className="sm:col-span-2">
+              <label htmlFor="description" className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">
+                Description
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                placeholder="Tell people about your event..."
+                rows={3}
+                required
+                className="w-full resize-none rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
+              />
+            </div>
           </div>
 
           {/* Actions */}
-          <div className="mt-2 flex gap-3">
+          <div className="mt-4 flex gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:border-[var(--border-hover)]"
+              disabled={isPending}
+              className="flex-1 rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:border-[var(--border-hover)] disabled:opacity-50"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[var(--accent-hover)]"
+              disabled={isPending}
+              className="flex-1 rounded-lg bg-[var(--accent)] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[var(--accent-hover)] disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center gap-2"
             >
-              Create Event
+              {isPending ? (
+                <>
+                  <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Creating...
+                </>
+              ) : (
+                "Create Event"
+              )}
             </button>
           </div>
         </form>

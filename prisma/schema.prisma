@@ -12,4 +12,17 @@ datasource db {
   provider = "sqlite"
 }
 
-model 
+model Event {
+  id             String   @id @default(cuid())
+  title          String
+  organizer      String
+  venue          String
+  location       String
+  description    String
+  date           DateTime
+  imageUrl       String?
+  attendeesCount Int      @default(0)
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

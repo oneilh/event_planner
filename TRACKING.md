@@ -18,3 +18,6 @@
 - Made the event cards in `app/page.tsx` responsive using CSS Grid and implemented proper dark mode text/background color contrast using Tailwind variants.
 - Added `cursor-pointer` and a subtle hover translation effect to the event cards to make them feel interactive and clickable.
 - Explicitly added `cursor-pointer` to all interactive buttons and logos in `app/components/Navbar.tsx` for consistent interaction feedback.
+- Created `lib/prisma.ts` to export a Prisma Client singleton, preventing multiple instances from exhausting database connections in development.
+- Created `app/actions/event.ts` with a Next.js Server Action to create events using Prisma.
+- Updated `CreateEventModal.tsx` to include all Prisma `Event` model fields (title, organizer, venue, location, description, date, imageUrl) and connected it to the Server Action.
