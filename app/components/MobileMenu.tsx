@@ -60,7 +60,7 @@ export default function MobileMenu({
               setShowCreateModal(true);
               setIsOpen(false);
             }}
-            className="flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[var(--accent)] to-violet-500 px-4 py-3.5 text-sm font-medium text-white shadow-md transition-all hover:brightness-110 hover:shadow-lg dark:from-white dark:to-gray-200 dark:text-black w-full cursor-pointer"
+            className="flex items-center justify-center gap-2 rounded-2xl bg-[var(--accent)] px-4 py-3.5 text-sm font-medium text-white shadow-md transition-all hover:bg-[var(--accent-hover)] hover:shadow-lg w-full cursor-pointer"
           >
             <Plus size={18} />
             Create Event
@@ -70,7 +70,7 @@ export default function MobileMenu({
           <div className="mt-1 flex gap-3">
             <Link
               href="/login"
-              className="flex flex-1 items-center justify-center gap-2 rounded-2xl border-2 border-[var(--border)] bg-transparent px-4 py-3 text-sm font-semibold text-[var(--text-primary)] transition-all hover:border-[var(--accent)] hover:bg-[var(--accent-light)] hover:text-[var(--accent)]"
+              className="flex flex-1 items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-transparent px-4 py-3 text-sm font-semibold text-[var(--text-primary)] transition-all hover:border-[var(--accent)] hover:bg-[var(--accent-light)] hover:text-[var(--accent)]"
               onClick={() => setIsOpen(false)}
             >
               <LogIn size={16} />
@@ -78,7 +78,7 @@ export default function MobileMenu({
             </Link>
             <Link
               href="/signup"
-              className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-violet-600 hover:shadow-lg"
+              className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-[var(--accent-hover)] hover:shadow-lg"
               onClick={() => setIsOpen(false)}
             >
               <UserPlus size={16} />

@@ -44,7 +44,7 @@ export default function Navbar() {
             href="/"
             className="flex items-center gap-2 transition-transform hover:scale-105 cursor-pointer"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--accent)] to-violet-500 text-white shadow-md">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--accent)] text-white shadow-md">
               <CalendarDays size={20} strokeWidth={2.5} />
             </div>
             <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-[var(--text-primary)]">
@@ -74,7 +74,7 @@ export default function Navbar() {
             {/* Create Event Button */}
             <button
               onClick={() => setShowCreateModal(true)}
-              className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[var(--accent)] to-violet-500 px-4 py-2 text-sm font-medium text-white shadow-md transition-all hover:shadow-lg hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-[var(--accent)] dark:from-white dark:to-gray-200 dark:text-black cursor-pointer"
+              className="flex items-center gap-2 rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white shadow-md transition-all hover:bg-[var(--accent-hover)] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent)] cursor-pointer"
             >
               <Plus size={16} />
               Create Event
