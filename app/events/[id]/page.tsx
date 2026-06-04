@@ -49,7 +49,7 @@ export default async function EventPage({
           
           {/* Header Info */}
           <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-white/60 mb-3">
+            <p className="text-sm font-bold uppercase tracking-widest text-[var(--text-muted)] mb-3">
               By {event.organizer}
             </p>
             <h1 className="text-4xl sm:text-5xl font-black text-[var(--text-primary)] leading-tight tracking-tight mb-6">
@@ -58,7 +58,7 @@ export default async function EventPage({
           </div>
 
           {/* Featured Image */}
-          <div className="w-full h-[400px] rounded-3xl overflow-hidden shadow-2xl relative border border-white/10">
+          <div className="w-full h-[400px] rounded-sm overflow-hidden relative border border-[var(--border)]">
             <img 
               src={imageUrl} 
               alt={event.title} 
@@ -67,12 +67,12 @@ export default async function EventPage({
           </div>
 
           {/* Description */}
-          <div className="bg-black/20 backdrop-blur-lg p-8 rounded-3xl border border-white/20 shadow-xl text-white">
-            <div className="flex items-center gap-3 mb-4 text-white">
-              <Info className="w-6 h-6 text-white/80" />
+          <div className="bg-[var(--bg-card)] p-8 rounded-sm border-[1.5px] border-[var(--border)]">
+            <div className="flex items-center gap-3 mb-4 text-[var(--text-primary)]">
+              <Info className="w-6 h-6 text-[var(--text-secondary)]" />
               <h2 className="text-2xl font-bold">About this event</h2>
             </div>
-            <div className="prose prose-invert max-w-none text-white/80 text-lg leading-relaxed whitespace-pre-wrap">
+            <div className="max-w-none text-[var(--text-secondary)] text-lg leading-relaxed whitespace-pre-wrap">
               {event.description}
             </div>
           </div>
@@ -84,29 +84,29 @@ export default async function EventPage({
           <div className="sticky top-24 flex flex-col gap-6">
             
             {/* Event Details Card */}
-            <div className="bg-black/20 backdrop-blur-lg border border-white/20 rounded-3xl p-6 sm:p-8 shadow-xl text-white">
+            <div className="bg-[var(--bg-card)] border-[1.5px] border-[var(--border)] rounded-sm p-6 sm:p-8">
               
               <div className="space-y-6">
                 {/* Date/Time */}
                 <div className="flex items-start gap-4">
-                  <div className="bg-white/10 border border-white/20 p-3 rounded-xl">
-                    <Calendar className="w-6 h-6 text-white/90" />
+                  <div className="bg-[var(--bg-primary)] border border-[var(--border)] p-3 rounded-sm">
+                    <Calendar className="w-6 h-6 text-[var(--text-primary)]" />
                   </div>
                   <div>
-                    <p className="text-sm text-white/60 font-medium mb-1">Date and Time</p>
-                    <p className="text-base font-bold text-white">{formattedDate}</p>
+                    <p className="text-sm text-[var(--text-muted)] font-medium mb-1">Date and Time</p>
+                    <p className="text-base font-bold text-[var(--text-primary)]">{formattedDate}</p>
                   </div>
                 </div>
                 
                 {/* Location */}
                 <div className="flex items-start gap-4">
-                  <div className="bg-white/10 border border-white/20 p-3 rounded-xl">
-                    <MapPin className="w-6 h-6 text-white/90" />
+                  <div className="bg-[var(--bg-primary)] border border-[var(--border)] p-3 rounded-sm">
+                    <MapPin className="w-6 h-6 text-[var(--text-primary)]" />
                   </div>
                   <div>
-                    <p className="text-sm text-white/60 font-medium mb-1">Location</p>
-                    <p className="text-base font-bold text-white">{event.venue}</p>
-                    <p className="text-sm text-white/60 mt-0.5">{event.location}</p>
+                    <p className="text-sm text-[var(--text-muted)] font-medium mb-1">Location</p>
+                    <p className="text-base font-bold text-[var(--text-primary)]">{event.venue}</p>
+                    <p className="text-sm text-[var(--text-muted)] mt-0.5">{event.location}</p>
                   </div>
                 </div>
               </div>
@@ -114,18 +114,18 @@ export default async function EventPage({
             </div>
 
             {/* Registration Action Card */}
-            <div className="bg-black/20 backdrop-blur-lg border border-white/20 rounded-3xl p-6 sm:p-8 shadow-xl text-center text-white">
+            <div className="bg-[var(--bg-card)] border-[1.5px] border-[var(--border)] rounded-sm p-6 sm:p-8 text-center">
               
               <div className="flex justify-center mb-4">
-                <div className="bg-white/10 border border-white/20 p-4 rounded-full">
-                  <Users className="w-8 h-8 text-white/90" />
+                <div className="bg-[var(--bg-primary)] border border-[var(--border)] p-4 rounded-full">
+                  <Users className="w-8 h-8 text-[var(--text-primary)]" />
                 </div>
               </div>
               
-              <h3 className="text-2xl font-bold text-white mb-2">Join the Event</h3>
+              <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-2">Join the Event</h3>
               
-              <div className="flex items-center justify-center gap-2 mb-6 text-white/80">
-                <span className="text-3xl font-black text-white">{event.attendeesCount}</span>
+              <div className="flex items-center justify-center gap-2 mb-6 text-[var(--text-secondary)]">
+                <span className="text-3xl font-black text-[var(--text-primary)]">{event.attendeesCount}</span>
                 <span className="text-base font-medium">people going</span>
               </div>
 
@@ -133,7 +133,7 @@ export default async function EventPage({
                 <GoingButton eventId={event.id} size="large" />
               </div>
               
-              <p className="text-xs text-white/50 mt-4 font-medium">
+              <p className="text-xs text-[var(--text-muted)] mt-4 font-medium">
                 Free to attend. Reserve your spot now.
               </p>
             </div>

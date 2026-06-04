@@ -4,93 +4,93 @@
 /* 📁 styles/theme.css */
 :root {
   /* Light Mode (default) */
-  --bg-primary: #f6f7fb;
+  --bg-primary: #fdfaf6;
   --bg-secondary: #ffffff;
   --bg-card: #ffffff;
   
   --bg-gradient: 
-    radial-gradient(at 20% 0%, rgba(139, 92, 246, 0.12) 0%, transparent 50%),
-    radial-gradient(at 80% 0%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(56, 189, 248, 0.12) 0%, transparent 50%);
+    radial-gradient(at 20% 0%, rgba(2, 132, 199, 0.06) 0%, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(234, 88, 12, 0.06) 0%, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.04) 0%, transparent 50%);
   
-  --text-primary: #0b1220;
-  --text-secondary: #4b5565;
-  --text-muted: #8b95a7;
+  --text-primary: #1f1b24;
+  --text-secondary: #57525e;
+  --text-muted: #8c8694;
   
-  --border: #e5e7eb;
-  --border-hover: #c7cdd6;
+  --border: #eae5df;
+  --border-hover: #d4cec7;
   
-  --accent: #6366f1;
-  --accent-hover: #4f46e5;
-  --accent-light: #e0e7ff;
+  --accent: #0284c7;
+  --accent-hover: #0369a1;
+  --accent-light: #e0f2fe;
   
-  --danger: #e5484d;
-  --danger-hover: #c92a2a;
-  --danger-light: #fff1f2;
+  --danger: #d96c5b;
+  --danger-hover: #c05747;
+  --danger-light: #fceeed;
   
-  --success: #22c55e;
-  --shadow: rgba(15, 23, 42, 0.08);
+  --success: #ea580c;
+  --shadow: rgba(31, 27, 36, 0.06);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     /* Dark Mode */
-    --bg-primary: #0b1220;
-    --bg-secondary: #111827;
-    --bg-card: #111827;
+    --bg-primary: #141118;
+    --bg-secondary: #1e1a24;
+    --bg-card: #1e1a24;
     
     --bg-gradient: 
-      radial-gradient(at 10% 0%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
-      radial-gradient(at 90% 0%, rgba(217, 70, 239, 0.15) 0%, transparent 50%),
-      radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.15) 0%, transparent 50%);
+      radial-gradient(at 10% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 50%),
+      radial-gradient(at 90% 0%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.08) 0%, transparent 50%);
     
-    --text-primary: #f3f4f6;
-    --text-secondary: #cbd5e1;
-    --text-muted: #94a3b8;
+    --text-primary: #f4f0f7;
+    --text-secondary: #c1b9c9;
+    --text-muted: #8c8694;
     
-    --border: #1f2937;
-    --border-hover: #374151;
+    --border: #2e2836;
+    --border-hover: #443c4f;
     
-    --accent: #818cf8;
-    --accent-hover: #6366f1;
-    --accent-light: #312e81;
+    --accent: #38bdf8;
+    --accent-hover: #7dd3fc;
+    --accent-light: #075985;
     
-    --danger: #ff6b6b;
-    --danger-hover: #e5484d;
-    --danger-light: #2a1517;
+    --danger: #e57d6d;
+    --danger-hover: #fc9586;
+    --danger-light: #3d231f;
     
-    --success: #34d399;
-    --shadow: rgba(0, 0, 0, 0.35);
+    --success: #f97316;
+    --shadow: rgba(0, 0, 0, 0.4);
   }
 }
 
 :root.dark {
-  --bg-primary: #0b1220;
-  --bg-secondary: #111827;
-  --bg-card: #111827;
+  --bg-primary: #141118;
+  --bg-secondary: #1e1a24;
+  --bg-card: #1e1a24;
   
   --bg-gradient: 
-    radial-gradient(at 10% 0%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
-    radial-gradient(at 90% 0%, rgba(217, 70, 239, 0.15) 0%, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.15) 0%, transparent 50%);
+    radial-gradient(at 10% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 50%),
+    radial-gradient(at 90% 0%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.08) 0%, transparent 50%);
   
-  --text-primary: #f3f4f6;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
+  --text-primary: #f4f0f7;
+  --text-secondary: #c1b9c9;
+  --text-muted: #8c8694;
   
-  --border: #1f2937;
-  --border-hover: #374151;
+  --border: #2e2836;
+  --border-hover: #443c4f;
   
-  --accent: #818cf8;
-  --accent-hover: #6366f1;
-  --accent-light: #312e81;
+  --accent: #38bdf8;
+  --accent-hover: #7dd3fc;
+  --accent-light: #075985;
   
-  --danger: #ff6b6b;
-  --danger-hover: #e5484d;
-  --danger-light: #2a1517;
+  --danger: #e57d6d;
+  --danger-hover: #fc9586;
+  --danger-light: #3d231f;
   
-  --success: #34d399;
-  --shadow: rgba(0, 0, 0, 0.35);
+  --success: #f97316;
+  --shadow: rgba(0, 0, 0, 0.4);
 }
 
 /* Custom UI Utilities */

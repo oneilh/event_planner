@@ -34,3 +34,8 @@
 - Fixed text color for the Organizer in the Event Details page to match the glassmorphic dark theme.
 - Fixed layout distortion on the Going Button by adding a min-width and standardizing the hover transitions between states.
 - Fixed layout distortion on the homepage event cards by adding truncation (flex-1 min-w-0 truncate) to the location/venue text so it doesn't wrap awkwardly against the Join button.
+- Updated globals.css to feature an elegant and modern event-vibe color palette for both light and dark modes, ensuring colors blend well together without blinding or dull gradients, while leaving the card styles untouched.
+- Updated globals.css to replace the purple accent with a sleek Sky Blue and the green success state with an energetic Sunset Orange, adjusting background gradients to match the new blue/orange color scheme.
+- Redesigned the Event Details page to use a clean, flat UI, replacing heavy shadows and extreme rounded corners with crisp borders (1.5px), sharp edges (rounded-sm), and solid backgrounds to match the aesthetic of the homepage event cards.
+- Added neo-brutalist touches to the Event Details page component blocks (stronger borders, sharp offset shadows, and accent-colored icons) to significantly improve contrast while maintaining the flat, cool vibe.
+- Reverted the brutalist shadows and implemented an elegant, clean flat UI approach on the Event Details page using subtle color blocking (accent-light backgrounds for icons) and rounded-2xl corners to achieve high-end contrast without visual clutter.
