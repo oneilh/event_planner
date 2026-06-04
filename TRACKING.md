@@ -23,3 +23,14 @@
 - Updated `CreateEventModal.tsx` to include all Prisma `Event` model fields (title, organizer, venue, location, description, date, imageUrl) and connected it to the Server Action.
 - Created `prisma/seed.ts` script to populate the database with the initial 4 default events and configured `prisma.config.ts` and `package.json` to execute it using `tsx`.
 - Updated `app/page.tsx` to fetch events directly from the Prisma database using `prisma.event.findMany()` and map them to the existing UI layout.
+- Created dynamic event details page (\/events/[id]/page.tsx\) to display full event details fetched from Prisma.
+- Implemented dummy 'Going' feature using a Server Action to toggle ttendeesCount in the database.
+- Created \GoingButton\ client component to manage local state and trigger the update action.
+- Updated event cards on the home page to link to their respective details pages and included a small \GoingButton\ variant.
+- Created \/events\ route as an alias to the home page list.
+- Redesigned the Event Details page to feature a clean, two-column layout with a prominent back button instead of a full-screen hero image.
+- Improved the \GoingButton\ UX with vibrant gradients and better alignment.
+- Updated Event Details page cards and Going Button to use the dark glassmorphic UI vibe matching the event list cards.
+- Fixed text color for the Organizer in the Event Details page to match the glassmorphic dark theme.
+- Fixed layout distortion on the Going Button by adding a min-width and standardizing the hover transitions between states.
+- Fixed layout distortion on the homepage event cards by adding truncation (flex-1 min-w-0 truncate) to the location/venue text so it doesn't wrap awkwardly against the Join button.

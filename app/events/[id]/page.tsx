@@ -1,14 +1,147 @@
-type EventPageProps = {
-  params: Promise<{
-    id: string;
-  }>;
-};
-export default async function EventPage({ params }: EventPageProps) {
+import { notFound } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+import GoingButton from "@/app/components/GoingButton";
+import Link from "next/link";
+import { ArrowLeft, Calendar, MapPin, Users, Info } from "lucide-react";
+
+export default async function EventPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
+  const event = await prisma.event.findUnique({
+    where: { id },
+  });
+
+  if (!event) {
+    notFound();
+  }
+
+  const eventDate = new Date(event.date);
+  const formattedDate = eventDate.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  const imageUrl = event.imageUrl || "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=1200&auto=format&fit=crop";
+
   return (
-    <div className="bg-primary">
-      <h1>Event Page</h1>
-      <p>This is the event page {id}.</p>
+    <div className="min-h-screen bg-[var(--background)] py-8 px-4 sm:px-6 lg:px-8 max-w-[1200px] mx-auto">
+      
+      {/* Back Navigation */}
+      <Link 
+        href="/" 
+        className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors mb-8 group"
+      >
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> 
+        Back to all events
+      </Link>
+
+      <div className="flex flex-col lg:flex-row gap-10">
+        
+        {/* Left Content Column */}
+        <div className="flex-1 space-y-8">
+          
+          {/* Header Info */}
+          <div>
+            <p className="text-sm font-bold uppercase tracking-widest text-white/60 mb-3">
+              By {event.organizer}
+            </p>
+            <h1 className="text-4xl sm:text-5xl font-black text-[var(--text-primary)] leading-tight tracking-tight mb-6">
+              {event.title}
+            </h1>
+          </div>
+
+          {/* Featured Image */}
+          <div className="w-full h-[400px] rounded-3xl overflow-hidden shadow-2xl relative border border-white/10">
+            <img 
+              src={imageUrl} 
+              alt={event.title} 
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Description */}
+          <div className="bg-black/20 backdrop-blur-lg p-8 rounded-3xl border border-white/20 shadow-xl text-white">
+            <div className="flex items-center gap-3 mb-4 text-white">
+              <Info className="w-6 h-6 text-white/80" />
+              <h2 className="text-2xl font-bold">About this event</h2>
+            </div>
+            <div className="prose prose-invert max-w-none text-white/80 text-lg leading-relaxed whitespace-pre-wrap">
+              {event.description}
+            </div>
+          </div>
+
+        </div>
+
+        {/* Right Sticky Sidebar */}
+        <div className="w-full lg:w-[400px] flex-shrink-0">
+          <div className="sticky top-24 flex flex-col gap-6">
+            
+            {/* Event Details Card */}
+            <div className="bg-black/20 backdrop-blur-lg border border-white/20 rounded-3xl p-6 sm:p-8 shadow-xl text-white">
+              
+              <div className="space-y-6">
+                {/* Date/Time */}
+                <div className="flex items-start gap-4">
+                  <div className="bg-white/10 border border-white/20 p-3 rounded-xl">
+                    <Calendar className="w-6 h-6 text-white/90" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-white/60 font-medium mb-1">Date and Time</p>
+                    <p className="text-base font-bold text-white">{formattedDate}</p>
+                  </div>
+                </div>
+                
+                {/* Location */}
+                <div className="flex items-start gap-4">
+                  <div className="bg-white/10 border border-white/20 p-3 rounded-xl">
+                    <MapPin className="w-6 h-6 text-white/90" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-white/60 font-medium mb-1">Location</p>
+                    <p className="text-base font-bold text-white">{event.venue}</p>
+                    <p className="text-sm text-white/60 mt-0.5">{event.location}</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Registration Action Card */}
+            <div className="bg-black/20 backdrop-blur-lg border border-white/20 rounded-3xl p-6 sm:p-8 shadow-xl text-center text-white">
+              
+              <div className="flex justify-center mb-4">
+                <div className="bg-white/10 border border-white/20 p-4 rounded-full">
+                  <Users className="w-8 h-8 text-white/90" />
+                </div>
+              </div>
+              
+              <h3 className="text-2xl font-bold text-white mb-2">Join the Event</h3>
+              
+              <div className="flex items-center justify-center gap-2 mb-6 text-white/80">
+                <span className="text-3xl font-black text-white">{event.attendeesCount}</span>
+                <span className="text-base font-medium">people going</span>
+              </div>
+
+              <div className="w-full">
+                <GoingButton eventId={event.id} size="large" />
+              </div>
+              
+              <p className="text-xs text-white/50 mt-4 font-medium">
+                Free to attend. Reserve your spot now.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 }
