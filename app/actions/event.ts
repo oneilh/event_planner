@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createEventAction(formData: FormData) {
   const title = formData.get("title") as string;
@@ -65,4 +66,14 @@ export async function updateEventAction(id: string, formData: FormData) {
   revalidatePath("/");
   revalidatePath("/events");
   revalidatePath(`/events/${id}`);
+}
+
+export async function deleteEventAction(id: string) {
+  await prisma.event.delete({
+    where: { id },
+  });
+
+  revalidatePath("/");
+  revalidatePath("/events");
+  redirect("/");
 }

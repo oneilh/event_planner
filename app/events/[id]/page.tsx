@@ -4,6 +4,7 @@ import GoingButton from "@/app/components/GoingButton";
 import Link from "next/link";
 import { ArrowLeft, Calendar, MapPin, Users, Info } from "lucide-react";
 import EditEventButton from "@/app/components/EditEventButton";
+import DeleteEventButton from "@/app/components/DeleteEventButton";
 
 export default async function EventPage({
   params,
@@ -58,8 +59,9 @@ export default async function EventPage({
                 {event.title}
               </h1>
             </div>
-            <div className="pt-2 flex-shrink-0">
+            <div className="pt-2 flex-shrink-0 flex items-center gap-3">
               <EditEventButton event={event} />
+              <DeleteEventButton eventId={event.id} />
             </div>
           </div>
 
