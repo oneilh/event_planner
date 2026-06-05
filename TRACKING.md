@@ -39,3 +39,4 @@
 - Redesigned the Event Details page to use a clean, flat UI, replacing heavy shadows and extreme rounded corners with crisp borders (1.5px), sharp edges (rounded-sm), and solid backgrounds to match the aesthetic of the homepage event cards.
 - Added neo-brutalist touches to the Event Details page component blocks (stronger borders, sharp offset shadows, and accent-colored icons) to significantly improve contrast while maintaining the flat, cool vibe.
 - Reverted the brutalist shadows and implemented an elegant, clean flat UI approach on the Event Details page using subtle color blocking (accent-light backgrounds for icons) and rounded-2xl corners to achieve high-end contrast without visual clutter.
+- Implemented the Edit Event feature, including a new server action `updateEventAction`, an `EditEventModal` component, and an `EditEventButton` integrated into the Event Details page.

@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import GoingButton from "@/app/components/GoingButton";
 import Link from "next/link";
 import { ArrowLeft, Calendar, MapPin, Users, Info } from "lucide-react";
+import EditEventButton from "@/app/components/EditEventButton";
 
 export default async function EventPage({
   params,
@@ -48,13 +49,18 @@ export default async function EventPage({
         <div className="flex-1 space-y-8">
           
           {/* Header Info */}
-          <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-[var(--text-muted)] mb-3">
-              By {event.organizer}
-            </p>
-            <h1 className="text-4xl sm:text-5xl font-black text-[var(--text-primary)] leading-tight tracking-tight mb-6">
-              {event.title}
-            </h1>
+          <div className="flex items-start justify-between gap-4 mb-6">
+            <div>
+              <p className="text-sm font-bold uppercase tracking-widest text-[var(--text-muted)] mb-3">
+                By {event.organizer}
+              </p>
+              <h1 className="text-4xl sm:text-5xl font-black text-[var(--text-primary)] leading-tight tracking-tight">
+                {event.title}
+              </h1>
+            </div>
+            <div className="pt-2 flex-shrink-0">
+              <EditEventButton event={event} />
+            </div>
           </div>
 
           {/* Featured Image */}
