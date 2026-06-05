@@ -40,3 +40,5 @@
 - Added neo-brutalist touches to the Event Details page component blocks (stronger borders, sharp offset shadows, and accent-colored icons) to significantly improve contrast while maintaining the flat, cool vibe.
 - Reverted the brutalist shadows and implemented an elegant, clean flat UI approach on the Event Details page using subtle color blocking (accent-light backgrounds for icons) and rounded-2xl corners to achieve high-end contrast without visual clutter.
 - Implemented the Edit Event feature, including a new server action `updateEventAction`, an `EditEventModal` component, and an `EditEventButton` integrated into the Event Details page.
+- Created `app/not-found.tsx` to handle 404 errors with a clean, flat UI that perfectly matches the app's updated aesthetic (crisp borders, sharp edges, and solid backgrounds) and directs users back to the home page.
+- Implemented Suspense loading states by creating `app/loading.tsx` and `app/events/[id]/loading.tsx` to display skeleton layouts while fetching event data from Prisma.
