@@ -1,5 +1,5 @@
 import { ArrowLeft, Calendar, MapPin, Users, Info } from "lucide-react";
-import Link from "next/link";
+
 
 export default function Loading() {
   return (
@@ -60,7 +60,7 @@ export default function Loading() {
               <div className="space-y-6">
                 {/* Date/Time Skeleton */}
                 <div className="flex items-start gap-4">
-                  <div className="bg-[var(--primary)] border border-[var(--border)] p-3 rounded-sm flex-shrink-0">
+                  <div className="bg-[var(--bg-primary)] border border-[var(--border)] p-3 rounded-sm flex-shrink-0">
                     <Calendar className="w-6 h-6 text-[var(--border)]" />
                   </div>
                   <div className="w-full">
@@ -71,7 +71,7 @@ export default function Loading() {
                 
                 {/* Location Skeleton */}
                 <div className="flex items-start gap-4">
-                  <div className="bg-[var(--primary)] border border-[var(--border)] p-3 rounded-sm flex-shrink-0">
+                  <div className="bg-[var(--bg-primary)] border border-[var(--border)] p-3 rounded-sm flex-shrink-0">
                     <MapPin className="w-6 h-6 text-[var(--border)]" />
                   </div>
                   <div className="w-full">
@@ -88,7 +88,7 @@ export default function Loading() {
             <div className="bg-[var(--bg-card)] border-[1.5px] border-[var(--border)] rounded-sm p-6 sm:p-8 text-center flex flex-col items-center">
               
               <div className="flex justify-center mb-4">
-                <div className="bg-[var(--primary)] border border-[var(--border)] p-4 rounded-full">
+                <div className="bg-[var(--bg-primary)] border border-[var(--border)] p-4 rounded-full">
                   <Users className="w-8 h-8 text-[var(--border)]" />
                 </div>
               </div>
