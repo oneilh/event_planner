@@ -75,6 +75,17 @@ export default function Navbar() {
               )}
             </button>
 
+            {/* My Events Link */}
+            {session && (
+              <Link
+                href="/my-events"
+                className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-2 text-sm font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent-light)] hover:text-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] cursor-pointer"
+              >
+                <CalendarDays size={16} />
+                My Events
+              </Link>
+            )}
+
             {/* Create Event Button */}
             <button
               onClick={() => setShowCreateModal(true)}

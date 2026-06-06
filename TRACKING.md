@@ -50,3 +50,8 @@
 - Updated `seed.ts` to assign seed events to a dummy user, followed by a database reset and regeneration of Prisma client.
 - Updated `app/actions/event.ts` Server Actions (create, update, delete) to enforce authorization, requiring users to be logged in and checking if they own the event before allowing modifications.
 - Modified `app/events/[id]/page.tsx` to conditionally render the Edit and Delete buttons only when the currently authenticated user is the owner of the event.
+- Implemented `/my-events` dashboard featuring a tabbed interface for users to manage events they've created and events they've joined.
+- Updated `prisma/schema.prisma` to include a many-to-many relationship between `User` and `Event` to properly track event attendees.
+- Refactored `toggleGoingStatus` server action to connect/disconnect authenticated users to/from events in the database.
+- Extracted reusable `EventCard` component from the homepage and updated both `app/page.tsx` and the new dashboard to use it.
+- Added navigation links to the new dashboard in the desktop `Navbar` and mobile menu dropdowns.

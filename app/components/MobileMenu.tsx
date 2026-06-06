@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sun, Moon, Plus, LogIn, UserPlus, LogOut, Loader2 } from "lucide-react";
+import { Sun, Moon, Plus, LogIn, UserPlus, LogOut, Loader2, CalendarDays } from "lucide-react";
 import { useSession, signOut } from "@/lib/auth-client";
 
 interface MobileMenuProps {
@@ -89,6 +89,14 @@ export default function MobileMenu({
                   <p className="text-xs text-[var(--text-secondary)] truncate">{session.user.email}</p>
                 </div>
               </div>
+              <Link
+                href="/my-events"
+                onClick={() => setIsOpen(false)}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--bg-secondary)] px-4 py-2.5 text-sm font-semibold text-[var(--text-primary)] transition-colors hover:bg-[var(--border)] mb-2 cursor-pointer"
+              >
+                <CalendarDays size={16} />
+                My Events
+              </Link>
               <button
                 onClick={async () => {
                   await signOut();

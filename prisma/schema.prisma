@@ -27,6 +27,7 @@ model Event {
   updatedAt DateTime @updatedAt
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  attendees User[]   @relation("EventAttendees")
 }
 
 model User {
@@ -40,6 +41,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   events        Event[]
+  joinedEvents  Event[]   @relation("EventAttendees")
 
   @@unique([email])
   @@map("user")
