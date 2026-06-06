@@ -42,3 +42,5 @@
 - Implemented the Edit Event feature, including a new server action `updateEventAction`, an `EditEventModal` component, and an `EditEventButton` integrated into the Event Details page.
 - Created `app/not-found.tsx` to handle 404 errors with a clean, flat UI that perfectly matches the app's updated aesthetic (crisp borders, sharp edges, and solid backgrounds) and directs users back to the home page.
 - Implemented Suspense loading states by creating `app/loading.tsx` and `app/events/[id]/loading.tsx` to display skeleton layouts while fetching event data from Prisma.
+- Implemented Google Auth login feature using Better Auth and redesigned the `app/(auth)/login/page.tsx` with a modern, beautiful UI.
+- Updated `Navbar.tsx` and `MobileMenu.tsx` to conditionally display user avatar, details, and a logout button when an active session is detected using Better Auth's `useSession`.

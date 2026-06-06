@@ -11,6 +11,7 @@
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.8.0",
     "@prisma/client": "^7.8.0",
+    "better-auth": "^1.6.14",
     "better-sqlite3": "^12.10.0",
     "dotenv": "^17.4.2",
     "lucide-react": "^1.17.0",
@@ -22,7 +23,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.0",
     "@types/better-sqlite3": "^7.6.13",
-    "@types/node": "^20",
+    "@types/node": "^20.19.41",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "daisyui": "^5.5.20",
@@ -36,5 +37,8 @@
   "browserslist": "> 1%",
   "prisma": {
     "seed": "tsx prisma/seed.ts"
+  },
+  "overrides": {
+    "kysely": "0.28.1"
   }
 }

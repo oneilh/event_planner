@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Sun, Moon, Plus, LogIn, UserPlus } from "lucide-react";
+import { Sun, Moon, Plus, LogIn, UserPlus, LogOut, Loader2 } from "lucide-react";
+import { useSession, signOut } from "@/lib/auth-client";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -18,6 +19,8 @@ export default function MobileMenu({
   toggleDarkMode,
   setShowCreateModal,
 }: MobileMenuProps) {
+  const { data: session, isPending } = useSession();
+
   return (
     <div
       className={`absolute left-4 right-4 top-[76px] z-50 md:hidden transition-all duration-300 origin-top-right ${
@@ -67,24 +70,56 @@ export default function MobileMenu({
           </button>
 
           {/* Auth Links */}
-          <div className="mt-1 flex gap-3">
-            <Link
-              href="/login"
-              className="flex flex-1 items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-transparent px-4 py-3 text-sm font-semibold text-[var(--text-primary)] transition-all hover:border-[var(--accent)] hover:bg-[var(--accent-light)] hover:text-[var(--accent)]"
-              onClick={() => setIsOpen(false)}
-            >
-              <LogIn size={16} />
-              Log In
-            </Link>
-            <Link
-              href="/signup"
-              className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-[var(--accent-hover)] hover:shadow-lg"
-              onClick={() => setIsOpen(false)}
-            >
-              <UserPlus size={16} />
-              Sign Up
-            </Link>
-          </div>
+          {isPending ? (
+            <div className="mt-1 flex justify-center py-2">
+              <Loader2 className="h-6 w-6 animate-spin text-[var(--accent)]" />
+            </div>
+          ) : session ? (
+            <div className="mt-2 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-3 shadow-sm">
+              <div className="flex items-center gap-3 mb-3 px-1">
+                {session.user.image ? (
+                  <img src={session.user.image} alt={session.user.name} className="h-10 w-10 rounded-full object-cover" />
+                ) : (
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)] text-lg text-white">
+                    {session.user.name?.charAt(0).toUpperCase() || "U"}
+                  </div>
+                )}
+                <div className="overflow-hidden">
+                  <p className="text-sm font-semibold text-[var(--text-primary)] truncate">{session.user.name}</p>
+                  <p className="text-xs text-[var(--text-secondary)] truncate">{session.user.email}</p>
+                </div>
+              </div>
+              <button
+                onClick={async () => {
+                  await signOut();
+                  setIsOpen(false);
+                }}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-50 dark:bg-red-950/30 px-4 py-2.5 text-sm font-semibold text-red-600 transition-colors hover:bg-red-100 dark:hover:bg-red-900/40 cursor-pointer"
+              >
+                <LogOut size={16} />
+                Log Out
+              </button>
+            </div>
+          ) : (
+            <div className="mt-1 flex gap-3">
+              <Link
+                href="/login"
+                className="flex flex-1 items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-transparent px-4 py-3 text-sm font-semibold text-[var(--text-primary)] transition-all hover:border-[var(--accent)] hover:bg-[var(--accent-light)] hover:text-[var(--accent)]"
+                onClick={() => setIsOpen(false)}
+              >
+                <LogIn size={16} />
+                Log In
+              </Link>
+              <Link
+                href="/signup"
+                className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-[var(--accent-hover)] hover:shadow-lg"
+                onClick={() => setIsOpen(false)}
+              >
+                <UserPlus size={16} />
+                Sign Up
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

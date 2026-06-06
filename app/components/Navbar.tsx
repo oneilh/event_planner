@@ -14,9 +14,12 @@ import {
   UserPlus,
   ChevronDown,
   CalendarDays,
+  LogOut,
+  Loader2,
 } from "lucide-react";
 import CreateEventModal from "./CreateEventModal";
 import MobileMenu from "./MobileMenu";
+import { useSession, signOut } from "@/lib/auth-client";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -24,6 +27,7 @@ export default function Navbar() {
   const [showAuthDropdown, setShowAuthDropdown] = useState(false);
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const { data: session, isPending } = useSession();
 
   useEffect(() => {
     setMounted(true);
@@ -84,10 +88,23 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setShowAuthDropdown((prev) => !prev)}
-                className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-2 text-sm font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] cursor-pointer"
+                disabled={isPending}
+                className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-2 text-sm font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] cursor-pointer disabled:opacity-70"
               >
-                <User size={16} />
-                Account
+                {isPending ? (
+                  <Loader2 size={16} className="animate-spin" />
+                ) : session ? (
+                  session.user.image ? (
+                    <img src={session.user.image} alt={session.user.name} className="h-5 w-5 rounded-full object-cover" />
+                  ) : (
+                    <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--accent)] text-[10px] text-white">
+                      {session.user.name?.charAt(0).toUpperCase() || "U"}
+                    </div>
+                  )
+                ) : (
+                  <User size={16} />
+                )}
+                {isPending ? "Loading..." : session ? session.user.name?.split(" ")[0] : "Account"}
                 <ChevronDown
                   size={14}
                   className={`transition-transform ${showAuthDropdown ? "rotate-180" : ""}`}
@@ -95,23 +112,44 @@ export default function Navbar() {
               </button>
 
               {showAuthDropdown && (
-                <div className="absolute right-0 mt-2 w-48 rounded-lg border border-[var(--border)] bg-[var(--bg-card)] py-1 shadow-lg">
-                  <Link
-                    href="/login"
-                    className="flex items-center gap-2 px-4 py-2 text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--accent-light)] hover:text-[var(--accent)]"
-                    onClick={() => setShowAuthDropdown(false)}
-                  >
-                    <LogIn size={16} />
-                    Log In
-                  </Link>
-                  <Link
-                    href="/signup"
-                    className="flex items-center gap-2 px-4 py-2 text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--accent-light)] hover:text-[var(--accent)]"
-                    onClick={() => setShowAuthDropdown(false)}
-                  >
-                    <UserPlus size={16} />
-                    Sign Up
-                  </Link>
+                <div className="absolute right-0 mt-2 w-56 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] py-1 shadow-xl">
+                  {session ? (
+                    <>
+                      <div className="px-4 py-3 border-b border-[var(--border)]">
+                        <p className="text-sm font-medium text-[var(--text-primary)] truncate">{session.user.name}</p>
+                        <p className="text-xs text-[var(--text-secondary)] truncate">{session.user.email}</p>
+                      </div>
+                      <button
+                        onClick={async () => {
+                          await signOut();
+                          setShowAuthDropdown(false);
+                        }}
+                        className="flex w-full items-center gap-2 px-4 py-2 text-sm text-red-500 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30 cursor-pointer"
+                      >
+                        <LogOut size={16} />
+                        Log Out
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        href="/login"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--accent-light)] hover:text-[var(--accent)]"
+                        onClick={() => setShowAuthDropdown(false)}
+                      >
+                        <LogIn size={16} />
+                        Log In
+                      </Link>
+                      <Link
+                        href="/signup"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--accent-light)] hover:text-[var(--accent)]"
+                        onClick={() => setShowAuthDropdown(false)}
+                      >
+                        <UserPlus size={16} />
+                        Sign Up
+                      </Link>
+                    </>
+                  )}
                 </div>
               )}
             </div>
