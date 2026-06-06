@@ -44,3 +44,5 @@
 - Implemented Suspense loading states by creating `app/loading.tsx` and `app/events/[id]/loading.tsx` to display skeleton layouts while fetching event data from Prisma.
 - Implemented Google Auth login feature using Better Auth and redesigned the `app/(auth)/login/page.tsx` with a modern, beautiful UI.
 - Updated `Navbar.tsx` and `MobileMenu.tsx` to conditionally display user avatar, details, and a logout button when an active session is detected using Better Auth's `useSession`.
+- Simplified the unauthenticated UX in `Navbar.tsx` and `MobileMenu.tsx` by removing the 'Sign Up' links and Account dropdown, providing a single, direct 'Sign In' button since Google Auth handles both login and signup.
+- Changed the styling of the 'Sign In' button in `Navbar.tsx` and `MobileMenu.tsx` to an outlined secondary button to visually differentiate it from the primary 'Create Event' button and improve UX clarity.

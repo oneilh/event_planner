@@ -101,22 +101,14 @@ export default function MobileMenu({
               </button>
             </div>
           ) : (
-            <div className="mt-1 flex gap-3">
+            <div className="mt-1 flex justify-center">
               <Link
                 href="/login"
-                className="flex flex-1 items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-transparent px-4 py-3 text-sm font-semibold text-[var(--text-primary)] transition-all hover:border-[var(--accent)] hover:bg-[var(--accent-light)] hover:text-[var(--accent)]"
+                className="flex w-full items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-3.5 text-sm font-semibold text-[var(--text-primary)] shadow-sm transition-all hover:border-[var(--accent)] hover:bg-[var(--accent-light)] hover:text-[var(--accent)]"
                 onClick={() => setIsOpen(false)}
               >
-                <LogIn size={16} />
-                Log In
-              </Link>
-              <Link
-                href="/signup"
-                className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white shadow-md transition-all hover:bg-[var(--accent-hover)] hover:shadow-lg"
-                onClick={() => setIsOpen(false)}
-              >
-                <UserPlus size={16} />
-                Sign Up
+                <LogIn size={18} />
+                Sign In
               </Link>
             </div>
           )}

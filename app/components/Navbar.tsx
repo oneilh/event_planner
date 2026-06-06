@@ -86,38 +86,44 @@ export default function Navbar() {
 
             {/* Auth Dropdown */}
             <div className="relative">
-              <button
-                onClick={() => setShowAuthDropdown((prev) => !prev)}
-                disabled={isPending}
-                className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-2 text-sm font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] cursor-pointer disabled:opacity-70"
-              >
-                {isPending ? (
+              {isPending ? (
+                <div className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-2 text-sm font-medium text-[var(--text-primary)] opacity-70">
                   <Loader2 size={16} className="animate-spin" />
-                ) : session ? (
-                  session.user.image ? (
-                    <img src={session.user.image} alt={session.user.name} className="h-5 w-5 rounded-full object-cover" />
-                  ) : (
-                    <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--accent)] text-[10px] text-white">
-                      {session.user.name?.charAt(0).toUpperCase() || "U"}
-                    </div>
-                  )
-                ) : (
-                  <User size={16} />
-                )}
-                {isPending ? "Loading..." : session ? session.user.name?.split(" ")[0] : "Account"}
-                <ChevronDown
-                  size={14}
-                  className={`transition-transform ${showAuthDropdown ? "rotate-180" : ""}`}
-                />
-              </button>
+                  Loading...
+                </div>
+              ) : session ? (
+                <>
+                  <button
+                    onClick={() => setShowAuthDropdown((prev) => !prev)}
+                    className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-2 text-sm font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] cursor-pointer"
+                  >
+                    {session.user.image ? (
+                      <img
+                        src={session.user.image}
+                        alt={session.user.name}
+                        className="h-5 w-5 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--accent)] text-[10px] text-white">
+                        {session.user.name?.charAt(0).toUpperCase() || "U"}
+                      </div>
+                    )}
+                    {session.user.name?.split(" ")[0]}
+                    <ChevronDown
+                      size={14}
+                      className={`transition-transform ${showAuthDropdown ? "rotate-180" : ""}`}
+                    />
+                  </button>
 
-              {showAuthDropdown && (
-                <div className="absolute right-0 mt-2 w-56 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] py-1 shadow-xl">
-                  {session ? (
-                    <>
+                  {showAuthDropdown && (
+                    <div className="absolute right-0 mt-2 w-56 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] py-1 shadow-xl">
                       <div className="px-4 py-3 border-b border-[var(--border)]">
-                        <p className="text-sm font-medium text-[var(--text-primary)] truncate">{session.user.name}</p>
-                        <p className="text-xs text-[var(--text-secondary)] truncate">{session.user.email}</p>
+                        <p className="text-sm font-medium text-[var(--text-primary)] truncate">
+                          {session.user.name}
+                        </p>
+                        <p className="text-xs text-[var(--text-secondary)] truncate">
+                          {session.user.email}
+                        </p>
                       </div>
                       <button
                         onClick={async () => {
@@ -129,28 +135,17 @@ export default function Navbar() {
                         <LogOut size={16} />
                         Log Out
                       </button>
-                    </>
-                  ) : (
-                    <>
-                      <Link
-                        href="/login"
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--accent-light)] hover:text-[var(--accent)]"
-                        onClick={() => setShowAuthDropdown(false)}
-                      >
-                        <LogIn size={16} />
-                        Log In
-                      </Link>
-                      <Link
-                        href="/signup"
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--accent-light)] hover:text-[var(--accent)]"
-                        onClick={() => setShowAuthDropdown(false)}
-                      >
-                        <UserPlus size={16} />
-                        Sign Up
-                      </Link>
-                    </>
+                    </div>
                   )}
-                </div>
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-2 text-sm font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent-light)] hover:text-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] cursor-pointer"
+                >
+                  <LogIn size={16} />
+                  Sign In
+                </Link>
               )}
             </div>
           </div>
