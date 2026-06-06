@@ -46,3 +46,7 @@
 - Updated `Navbar.tsx` and `MobileMenu.tsx` to conditionally display user avatar, details, and a logout button when an active session is detected using Better Auth's `useSession`.
 - Simplified the unauthenticated UX in `Navbar.tsx` and `MobileMenu.tsx` by removing the 'Sign Up' links and Account dropdown, providing a single, direct 'Sign In' button since Google Auth handles both login and signup.
 - Changed the styling of the 'Sign In' button in `Navbar.tsx` and `MobileMenu.tsx` to an outlined secondary button to visually differentiate it from the primary 'Create Event' button and improve UX clarity.
+- Implemented Event Ownership: Added `userId` to the `Event` schema and established a relation with the `User` model, enforcing that events belong to the users who create them.
+- Updated `seed.ts` to assign seed events to a dummy user, followed by a database reset and regeneration of Prisma client.
+- Updated `app/actions/event.ts` Server Actions (create, update, delete) to enforce authorization, requiring users to be logged in and checking if they own the event before allowing modifications.
+- Modified `app/events/[id]/page.tsx` to conditionally render the Edit and Delete buttons only when the currently authenticated user is the owner of the event.

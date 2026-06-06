@@ -5,6 +5,8 @@ import Link from "next/link";
 import { ArrowLeft, Calendar, MapPin, Users, Info } from "lucide-react";
 import EditEventButton from "@/app/components/EditEventButton";
 import DeleteEventButton from "@/app/components/DeleteEventButton";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export default async function EventPage({
   params,
@@ -19,6 +21,11 @@ export default async function EventPage({
   if (!event) {
     notFound();
   }
+
+  const session = await auth.api.getSession({
+    headers: await headers()
+  });
+  const isOwner = session?.user?.id === event.userId;
 
   const eventDate = new Date(event.date);
   const formattedDate = eventDate.toLocaleDateString("en-US", {
@@ -59,10 +66,12 @@ export default async function EventPage({
                 {event.title}
               </h1>
             </div>
-            <div className="pt-2 flex-shrink-0 flex items-center gap-3">
-              <EditEventButton event={event} />
-              <DeleteEventButton eventId={event.id} />
-            </div>
+            {isOwner && (
+              <div className="pt-2 flex-shrink-0 flex items-center gap-3">
+                <EditEventButton event={event} />
+                <DeleteEventButton eventId={event.id} />
+              </div>
+            )}
           </div>
 
           {/* Featured Image */}

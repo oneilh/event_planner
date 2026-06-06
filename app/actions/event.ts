@@ -3,8 +3,15 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export async function createEventAction(formData: FormData) {
+  const session = await auth.api.getSession({
+    headers: await headers()
+  });
+  if (!session) throw new Error("Unauthorized");
+
   const title = formData.get("title") as string;
   const organizer = formData.get("organizer") as string;
   const venue = formData.get("venue") as string;
@@ -28,6 +35,7 @@ export async function createEventAction(formData: FormData) {
       description,
       date,
       imageUrl: imageUrl || null,
+      userId: session.user.id,
     },
   });
 
@@ -36,6 +44,15 @@ export async function createEventAction(formData: FormData) {
 }
 
 export async function updateEventAction(id: string, formData: FormData) {
+  const session = await auth.api.getSession({
+    headers: await headers()
+  });
+  if (!session) throw new Error("Unauthorized");
+
+  const event = await prisma.event.findUnique({ where: { id } });
+  if (!event) throw new Error("Event not found");
+  if (event.userId !== session.user.id) throw new Error("Unauthorized: you do not own this event");
+
   const title = formData.get("title") as string;
   const organizer = formData.get("organizer") as string;
   const venue = formData.get("venue") as string;
@@ -69,6 +86,15 @@ export async function updateEventAction(id: string, formData: FormData) {
 }
 
 export async function deleteEventAction(id: string) {
+  const session = await auth.api.getSession({
+    headers: await headers()
+  });
+  if (!session) throw new Error("Unauthorized");
+
+  const event = await prisma.event.findUnique({ where: { id } });
+  if (!event) throw new Error("Event not found");
+  if (event.userId !== session.user.id) throw new Error("Unauthorized: you do not own this event");
+
   await prisma.event.delete({
     where: { id },
   });

@@ -2,6 +2,18 @@ import { prisma } from '../lib/prisma';
 
 async function main() {
   await prisma.event.deleteMany(); // Clear existing events just in case
+  await prisma.user.deleteMany(); // Clear existing users
+
+  // Create a dummy user
+  const user = await prisma.user.create({
+    data: {
+      id: "seed-user-id",
+      name: "Seed User",
+      email: "seed@example.com",
+      emailVerified: true,
+      image: "https://i.pravatar.cc/100?img=1"
+    }
+  });
 
   const events = [
     {
@@ -13,6 +25,7 @@ async function main() {
       date: new Date('2024-09-24T18:00:00Z'),
       imageUrl: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=800&auto=format&fit=crop",
       attendeesCount: 9,
+      userId: user.id
     },
     {
       title: "Spring Art Extravaganza",
@@ -23,6 +36,7 @@ async function main() {
       date: new Date('2024-09-25T10:00:00Z'),
       imageUrl: "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=800&auto=format&fit=crop",
       attendeesCount: 5,
+      userId: user.id
     },
     {
       title: "Trendy Threads Festival",
@@ -33,6 +47,7 @@ async function main() {
       date: new Date('2024-09-26T12:00:00Z'),
       imageUrl: "https://images.unsplash.com/photo-1509319117193-57bab727e09d?q=80&w=800&auto=format&fit=crop",
       attendeesCount: 10,
+      userId: user.id
     },
     {
       title: "Neon Nights Concert",
@@ -43,6 +58,7 @@ async function main() {
       date: new Date('2024-09-27T20:00:00Z'),
       imageUrl: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop",
       attendeesCount: 24,
+      userId: user.id
     }
   ];
 
