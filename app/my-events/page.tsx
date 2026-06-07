@@ -22,6 +22,7 @@ function formatEvent(event: any) {
     image: event.imageUrl || "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=800&auto=format&fit=crop",
     dateClass: "bg-white/20 dark:bg-black/40 text-white border border-white/30",
     attendees: event.attendeesCount,
+    rawEvent: event,
   };
 }
 

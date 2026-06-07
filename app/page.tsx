@@ -1,9 +1,15 @@
 import Link from "next/link";
 import { prisma } from '@/lib/prisma';
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import GoingButton from "@/app/components/GoingButton";
 import EventCard from "@/app/components/EventCard";
 
 export default async function Home() {
+  const session = await auth.api.getSession({
+    headers: await headers()
+  });
+  
   const fetchedEvents = await prisma.event.findMany();
   
   const events = fetchedEvents.map(event => {
@@ -33,9 +39,18 @@ export default async function Home() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} />
-        ))}
+        {fetchedEvents.map((rawEvent, index) => {
+          const event = events[index];
+          const isOwner = session?.user?.id === rawEvent.userId;
+          return (
+            <EventCard 
+              key={event.id} 
+              event={event} 
+              isOwner={isOwner} 
+              rawEvent={rawEvent} 
+            />
+          );
+        })}
       </div>
     </div>
   );

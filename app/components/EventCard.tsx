@@ -1,5 +1,6 @@
 import Link from "next/link";
 import GoingButton from "./GoingButton";
+import EventCardActions from "./EventCardActions";
 
 interface EventProps {
   id: string;
@@ -14,12 +15,19 @@ interface EventProps {
   attendees: number;
 }
 
-export default function EventCard({ event }: { event: EventProps }) {
+export default function EventCard({ 
+  event, 
+  isOwner,
+  rawEvent
+}: { 
+  event: EventProps;
+  isOwner?: boolean;
+  rawEvent?: any;
+}) {
   return (
-    <Link 
-      href={`/events/${event.id}`}
-      className="group rounded-sm p-6 sm:p-8 shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer hover:-translate-y-2 relative overflow-hidden flex flex-col h-full min-h-[340px] border-[1.5px] border-white/30 hover:border-white/60 text-white block"
-    >
+    <div className="group rounded-sm p-6 sm:p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden flex flex-col h-full min-h-[340px] border-[1.5px] border-white/30 hover:border-white/60 text-white block">
+      <Link href={`/events/${event.id}`} className="absolute inset-0 z-0" aria-label={`View details for ${event.title}`} />
+      
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
@@ -44,7 +52,11 @@ export default function EventCard({ event }: { event: EventProps }) {
           </div>
         </div>
         <div className="z-20 relative flex-shrink-0">
-          <GoingButton eventId={event.id} size="small" />
+          {isOwner && rawEvent ? (
+            <EventCardActions event={rawEvent} />
+          ) : (
+            <GoingButton eventId={event.id} size="small" />
+          )}
         </div>
       </div>
 
@@ -67,6 +79,6 @@ export default function EventCard({ event }: { event: EventProps }) {
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

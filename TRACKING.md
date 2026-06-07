@@ -55,3 +55,5 @@
 - Refactored `toggleGoingStatus` server action to connect/disconnect authenticated users to/from events in the database.
 - Extracted reusable `EventCard` component from the homepage and updated both `app/page.tsx` and the new dashboard to use it.
 - Added navigation links to the new dashboard in the desktop `Navbar` and mobile menu dropdowns.
+
+- Added inline Quick Actions (Edit, Delete) to EventCard that appear on hover for events owned by the user.

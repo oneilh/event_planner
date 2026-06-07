@@ -1,6 +1,7 @@
 "use client";
 
-import { useTransition } from "react";
+import { useTransition, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { updateEventAction } from "@/app/actions/event";
 
 type Event = {
@@ -21,6 +22,11 @@ type Props = {
 
 export default function EditEventModal({ event, onClose }: Props) {
   const [isPending, startTransition] = useTransition();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleAction = (formData: FormData) => {
     startTransition(async () => {
@@ -38,8 +44,8 @@ export default function EditEventModal({ event, onClose }: Props) {
     .toISOString()
     .slice(0, 16);
 
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm overflow-y-auto pt-10 pb-10">
+  const modalContent = (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-md p-4">
       <div
         className="relative mx-4 w-full max-w-lg rounded-3xl border border-[var(--border)] bg-[var(--bg-card)] p-8 shadow-2xl my-auto animate-fade-in-up"
         onClick={(e) => e.stopPropagation()}
@@ -210,4 +216,6 @@ export default function EditEventModal({ event, onClose }: Props) {
       </div>
     </div>
   );
+
+  return mounted ? createPortal(modalContent, document.body) : null;
 }

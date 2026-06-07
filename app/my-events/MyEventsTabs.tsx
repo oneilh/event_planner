@@ -15,6 +15,7 @@ interface EventProps {
   month: string;
   dateClass: string;
   attendees: number;
+  rawEvent?: any;
 }
 
 export default function MyEventsTabs({
@@ -77,7 +78,12 @@ export default function MyEventsTabs({
         /* Event Grid */
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
           {eventsToDisplay.map((event) => (
-            <EventCard key={event.id} event={event} />
+            <EventCard 
+              key={event.id} 
+              event={event} 
+              isOwner={activeTab === "created"} 
+              rawEvent={event.rawEvent} 
+            />
           ))}
         </div>
       )}
