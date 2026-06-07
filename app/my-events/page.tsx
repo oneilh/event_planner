@@ -6,7 +6,7 @@ import MyEventsTabs from "./MyEventsTabs";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-function formatEvent(event: any) {
+function formatEvent(event: any, userId: string) {
   const eventDate = new Date(event.date);
   const date = eventDate.getDate().toString();
   const month = eventDate.toLocaleString("default", { month: "short" });
@@ -22,6 +22,7 @@ function formatEvent(event: any) {
     image: event.imageUrl || "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=800&auto=format&fit=crop",
     dateClass: "bg-white/20 dark:bg-black/40 text-white border border-white/30",
     attendees: event.attendeesCount,
+    initialGoing: event.attendees?.some((a: any) => a.id === userId) || false,
     rawEvent: event,
   };
 }
@@ -40,6 +41,12 @@ export default async function MyEventsPage() {
   // Fetch created events
   const dbCreatedEvents = await prisma.event.findMany({
     where: { userId },
+    include: {
+      attendees: {
+        where: { id: userId },
+        select: { id: true },
+      },
+    },
     orderBy: { date: "asc" },
   });
 
@@ -50,11 +57,17 @@ export default async function MyEventsPage() {
         some: { id: userId },
       },
     },
+    include: {
+      attendees: {
+        where: { id: userId },
+        select: { id: true },
+      },
+    },
     orderBy: { date: "asc" },
   });
 
-  const createdEvents = dbCreatedEvents.map(formatEvent);
-  const joinedEvents = dbJoinedEvents.map(formatEvent);
+  const createdEvents = dbCreatedEvents.map(e => formatEvent(e, userId));
+  const joinedEvents = dbJoinedEvents.map(e => formatEvent(e, userId));
 
   return (
     <div className="py-10 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 min-h-screen">

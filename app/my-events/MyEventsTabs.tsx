@@ -15,6 +15,7 @@ interface EventProps {
   month: string;
   dateClass: string;
   attendees: number;
+  initialGoing?: boolean;
   rawEvent?: any;
 }
 

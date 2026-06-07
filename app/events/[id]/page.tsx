@@ -14,18 +14,26 @@ export default async function EventPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const session = await auth.api.getSession({
+    headers: await headers()
+  });
+
   const event = await prisma.event.findUnique({
     where: { id },
+    include: {
+      attendees: {
+        where: { id: session?.user?.id || "" },
+        select: { id: true }
+      }
+    }
   });
 
   if (!event) {
     notFound();
   }
 
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
   const isOwner = session?.user?.id === event.userId;
+  const isGoing = event.attendees.length > 0;
 
   const eventDate = new Date(event.date);
   const formattedDate = eventDate.toLocaleDateString("en-US", {
@@ -147,7 +155,7 @@ export default async function EventPage({
               </div>
 
               <div className="w-full">
-                <GoingButton eventId={event.id} size="large" />
+                <GoingButton eventId={event.id} initialGoing={isGoing} size="large" />
               </div>
               
               <p className="text-xs text-[var(--text-muted)] mt-4 font-medium">

@@ -16,6 +16,7 @@ interface EventProps {
   month: string;
   dateClass: string;
   attendees: number;
+  initialGoing?: boolean;
 }
 
 export default function EventCard({ 
@@ -61,7 +62,7 @@ export default function EventCard({
           {isOwner && rawEvent ? (
             <EventCardActions event={rawEvent} />
           ) : (
-            <GoingButton eventId={event.id} size="small" />
+            <GoingButton eventId={event.id} initialGoing={event.initialGoing} size="small" />
           )}
         </div>
       </div>

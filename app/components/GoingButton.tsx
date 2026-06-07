@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toggleGoingStatus } from "@/app/actions/going";
 
 interface GoingButtonProps {
@@ -16,6 +16,10 @@ export default function GoingButton({
 }: GoingButtonProps) {
   const [isGoing, setIsGoing] = useState(initialGoing);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setIsGoing(initialGoing);
+  }, [initialGoing]);
 
   const cursor = "cursor-pointer";
 

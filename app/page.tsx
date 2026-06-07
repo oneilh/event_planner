@@ -10,7 +10,14 @@ export default async function Home() {
     headers: await headers()
   });
   
-  const fetchedEvents = await prisma.event.findMany();
+  const fetchedEvents = await prisma.event.findMany({
+    include: {
+      attendees: {
+        where: { id: session?.user?.id || "" },
+        select: { id: true }
+      }
+    }
+  });
   
   const events = fetchedEvents.map(event => {
     const eventDate = new Date(event.date);
@@ -27,7 +34,8 @@ export default async function Home() {
       title: event.title,
       image: event.imageUrl || "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=800&auto=format&fit=crop",
       dateClass: "bg-white/20 dark:bg-black/40 text-white border border-white/30",
-      attendees: event.attendeesCount
+      attendees: event.attendeesCount,
+      initialGoing: event.attendees.length > 0
     };
   });
 
