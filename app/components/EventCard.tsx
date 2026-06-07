@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import GoingButton from "./GoingButton";
 import EventCardActions from "./EventCardActions";
 
@@ -24,10 +27,13 @@ export default function EventCard({
   isOwner?: boolean;
   rawEvent?: any;
 }) {
+  const router = useRouter();
+
   return (
-    <div className="group rounded-sm p-6 sm:p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden flex flex-col h-full min-h-[340px] border-[1.5px] border-white/30 hover:border-white/60 text-white block">
-      <Link href={`/events/${event.id}`} className="absolute inset-0 z-0" aria-label={`View details for ${event.title}`} />
-      
+    <div 
+      onClick={() => router.push(`/events/${event.id}`)}
+      className="cursor-pointer group rounded-sm p-6 sm:p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden flex flex-col h-full min-h-[340px] border-[1.5px] border-white/30 hover:border-white/60 text-white block"
+    >
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
@@ -63,7 +69,11 @@ export default function EventCard({
       {/* Middle row: Title and Organizer */}
       <div className="mt-8 mb-4 z-10 flex flex-col gap-1 drop-shadow-lg">
         <p className="text-xs font-bold uppercase tracking-wider text-gray-300">{event.organizer}</p>
-        <h2 className="text-2xl sm:text-3xl font-extrabold leading-tight tracking-tight mt-1 mb-4 text-white group-hover:text-gray-200 transition-colors">{event.title}</h2>
+        <Link href={`/events/${event.id}`} onClick={(e) => e.stopPropagation()}>
+          <h2 className="text-2xl sm:text-3xl font-extrabold leading-tight tracking-tight mt-1 mb-4 text-white group-hover:text-gray-200 transition-colors">
+            {event.title}
+          </h2>
+        </Link>
       </div>
 
       {/* Footer row: Attendees */}
