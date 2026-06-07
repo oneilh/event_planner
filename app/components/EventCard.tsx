@@ -17,6 +17,7 @@ interface EventProps {
   dateClass: string;
   attendees: number;
   initialGoing?: boolean;
+  attendeeAvatars?: string[];
 }
 
 export default function EventCard({ 
@@ -81,13 +82,25 @@ export default function EventCard({
       <div className="flex items-center justify-between z-10 mt-auto pt-4 border-t border-white/20">
         <span className="text-sm font-semibold opacity-90 drop-shadow-sm">Going</span>
         <div className="flex items-center">
-          <div className="flex -space-x-2">
-            <img src={`https://i.pravatar.cc/100?img=${event.id.charCodeAt(0) % 10 + 3}`} alt="user" className="w-8 h-8 rounded-full object-cover shadow-sm ring-2 ring-black/40" />
-            <img src={`https://i.pravatar.cc/100?img=${event.id.charCodeAt(0) % 10 + 4}`} alt="user" className="w-8 h-8 rounded-full object-cover shadow-sm ring-2 ring-black/40" />
-          </div>
-          <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold flex items-center justify-center -ml-2 z-10 border border-white/30 shadow-sm">
-            +{event.attendees}
-          </div>
+          {event.attendees > 0 ? (
+            <>
+              <div className="flex -space-x-2">
+                {event.attendees >= 1 && (
+                  <img src={event.attendeeAvatars?.[0] || `https://i.pravatar.cc/100?img=${event.id.charCodeAt(0) % 10 + 3}`} alt="user" className="w-8 h-8 rounded-full object-cover shadow-sm ring-2 ring-black/40" />
+                )}
+                {event.attendees >= 2 && (
+                  <img src={event.attendeeAvatars?.[1] || `https://i.pravatar.cc/100?img=${event.id.charCodeAt(0) % 10 + 4}`} alt="user" className="w-8 h-8 rounded-full object-cover shadow-sm ring-2 ring-black/40" />
+                )}
+              </div>
+              {event.attendees > 2 && (
+                <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold flex items-center justify-center -ml-2 z-10 border border-white/30 shadow-sm">
+                  +{event.attendees - 2}
+                </div>
+              )}
+            </>
+          ) : (
+            <span className="text-xs text-white/70 italic font-medium">Be the first to join</span>
+          )}
         </div>
       </div>
     </div>

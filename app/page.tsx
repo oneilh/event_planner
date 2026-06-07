@@ -9,12 +9,20 @@ export default async function Home() {
   const session = await auth.api.getSession({
     headers: await headers()
   });
-  
+  const userJoinedEvents = session?.user?.id 
+    ? await prisma.event.findMany({
+        where: {
+          attendees: { some: { id: session.user.id } }
+        },
+        select: { id: true }
+      }).then(events => new Set(events.map(e => e.id)))
+    : new Set();
+
   const fetchedEvents = await prisma.event.findMany({
     include: {
       attendees: {
-        where: { id: session?.user?.id || "" },
-        select: { id: true }
+        take: 2,
+        select: { id: true, image: true, name: true }
       }
     }
   });
@@ -35,7 +43,8 @@ export default async function Home() {
       image: event.imageUrl || "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=800&auto=format&fit=crop",
       dateClass: "bg-white/20 dark:bg-black/40 text-white border border-white/30",
       attendees: event.attendeesCount,
-      initialGoing: event.attendees.length > 0
+      initialGoing: userJoinedEvents.has(event.id),
+      attendeeAvatars: event.attendees.map(a => a.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(a.name)}`)
     };
   });
 

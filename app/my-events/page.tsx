@@ -6,7 +6,7 @@ import MyEventsTabs from "./MyEventsTabs";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-function formatEvent(event: any, userId: string) {
+function formatEvent(event: any, userId: string, initialGoing: boolean) {
   const eventDate = new Date(event.date);
   const date = eventDate.getDate().toString();
   const month = eventDate.toLocaleString("default", { month: "short" });
@@ -22,7 +22,8 @@ function formatEvent(event: any, userId: string) {
     image: event.imageUrl || "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=800&auto=format&fit=crop",
     dateClass: "bg-white/20 dark:bg-black/40 text-white border border-white/30",
     attendees: event.attendeesCount,
-    initialGoing: event.attendees?.some((a: any) => a.id === userId) || false,
+    initialGoing,
+    attendeeAvatars: event.attendees?.map((a: any) => a.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(a.name)}`) || [],
     rawEvent: event,
   };
 }
@@ -43,8 +44,8 @@ export default async function MyEventsPage() {
     where: { userId },
     include: {
       attendees: {
-        where: { id: userId },
-        select: { id: true },
+        take: 2,
+        select: { id: true, image: true, name: true }
       },
     },
     orderBy: { date: "asc" },
@@ -59,15 +60,21 @@ export default async function MyEventsPage() {
     },
     include: {
       attendees: {
-        where: { id: userId },
-        select: { id: true },
+        take: 2,
+        select: { id: true, image: true, name: true }
       },
     },
     orderBy: { date: "asc" },
   });
 
-  const createdEvents = dbCreatedEvents.map(e => formatEvent(e, userId));
-  const joinedEvents = dbJoinedEvents.map(e => formatEvent(e, userId));
+  const joinedEventIds = new Set(dbJoinedEvents.map(e => e.id));
+
+  // The user might have created events they also joined. We check against `joinedEventIds`
+  // Wait, `dbJoinedEvents` only fetches joined events. To be perfectly accurate for created events,
+  // we check if they are in `joinedEventIds`, but wait! If a created event is not in `dbJoinedEvents`, 
+  // they didn't join it. But wait, `dbJoinedEvents` will contain ALL joined events, which is correct.
+  const createdEvents = dbCreatedEvents.map(e => formatEvent(e, userId, joinedEventIds.has(e.id)));
+  const joinedEvents = dbJoinedEvents.map(e => formatEvent(e, userId, true));
 
   return (
     <div className="py-10 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 min-h-screen">

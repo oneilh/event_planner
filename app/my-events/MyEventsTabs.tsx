@@ -16,6 +16,7 @@ interface EventProps {
   dateClass: string;
   attendees: number;
   initialGoing?: boolean;
+  attendeeAvatars?: string[];
   rawEvent?: any;
 }
 
