@@ -58,3 +58,5 @@
 
 - Added inline Quick Actions (Edit, Delete) to EventCard that appear on hover for events owned by the user.
 - Fixed unhandled authentication error when unauthenticated users try to join an event, now gracefully redirecting them to the login page.
+- Fixed `npm i` ERESOLVE conflict by updating `next` from `^9.3.3` to `^16.2.7` in `package.json` to properly satisfy `better-auth` peer dependencies.
+- Fixed React hooks and TypeScript linting errors in `app/components/GoingButton.tsx`.

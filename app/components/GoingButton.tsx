@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toggleGoingStatus } from "@/app/actions/going";
 
@@ -19,9 +19,12 @@ export default function GoingButton({
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
+  const [prevInitial, setPrevInitial] = useState(initialGoing);
+
+  if (initialGoing !== prevInitial) {
     setIsGoing(initialGoing);
-  }, [initialGoing]);
+    setPrevInitial(initialGoing);
+  }
 
   const cursor = "cursor-pointer";
 
@@ -41,7 +44,7 @@ export default function GoingButton({
         return;
       }
       setIsGoing(!isGoing);
-    } catch (error: any) {
+    } catch (error) {
       console.error("Failed to toggle going status", error);
     } finally {
       setLoading(false);
