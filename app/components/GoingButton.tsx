@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { toggleGoingStatus } from "@/app/actions/going";
 
 interface GoingButtonProps {
@@ -16,6 +17,7 @@ export default function GoingButton({
 }: GoingButtonProps) {
   const [isGoing, setIsGoing] = useState(initialGoing);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsGoing(initialGoing);
@@ -29,9 +31,17 @@ export default function GoingButton({
 
     setLoading(true);
     try {
-      await toggleGoingStatus(eventId, isGoing);
+      const res = await toggleGoingStatus(eventId, isGoing);
+      if (res?.error) {
+        if (res.status === 401) {
+          router.push("/login");
+          return;
+        }
+        console.error(res.error);
+        return;
+      }
       setIsGoing(!isGoing);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to toggle going status", error);
     } finally {
       setLoading(false);

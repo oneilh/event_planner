@@ -57,3 +57,4 @@
 - Added navigation links to the new dashboard in the desktop `Navbar` and mobile menu dropdowns.
 
 - Added inline Quick Actions (Edit, Delete) to EventCard that appear on hover for events owned by the user.
+- Fixed unhandled authentication error when unauthenticated users try to join an event, now gracefully redirecting them to the login page.

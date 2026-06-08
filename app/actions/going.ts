@@ -11,7 +11,7 @@ export async function toggleGoingStatus(eventId: string, isGoing: boolean) {
   });
 
   if (!session?.user?.id) {
-    throw new Error("You must be logged in to join an event");
+    return { error: "You must be logged in to join an event", status: 401 };
   }
 
   const userId = session.user.id;
