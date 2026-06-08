@@ -60,3 +60,4 @@
 - Fixed unhandled authentication error when unauthenticated users try to join an event, now gracefully redirecting them to the login page.
 - Fixed `npm i` ERESOLVE conflict by updating `next` from `^9.3.3` to `^16.2.7` in `package.json` to properly satisfy `better-auth` peer dependencies.
 - Fixed React hooks and TypeScript linting errors in `app/components/GoingButton.tsx`.
+- Updated the webapp favicon to use the `CalendarDays` logo by generating `app/icon.svg` with the primary brand color and removing the default `favicon.ico`.
