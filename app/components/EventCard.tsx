@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import GoingButton from "./GoingButton";
@@ -30,6 +31,8 @@ export default function EventCard({
   rawEvent?: any;
 }) {
   const router = useRouter();
+  const [img1Error, setImg1Error] = useState(false);
+  const [img2Error, setImg2Error] = useState(false);
 
   return (
     <div 
@@ -86,10 +89,20 @@ export default function EventCard({
             <>
               <div className="flex -space-x-2">
                 {event.attendees >= 1 && (
-                  <img src={event.attendeeAvatars?.[0] || `https://i.pravatar.cc/100?img=${event.id.charCodeAt(0) % 10 + 3}`} alt="user" className="w-8 h-8 rounded-full object-cover shadow-sm ring-2 ring-black/40" />
+                  <img 
+                    src={!img1Error && event.attendeeAvatars?.[0] ? event.attendeeAvatars[0] : `https://i.pravatar.cc/100?img=${event.id.charCodeAt(0) % 10 + 3}`} 
+                    alt="user" 
+                    className="w-8 h-8 rounded-full object-cover shadow-sm ring-2 ring-black/40" 
+                    onError={() => setImg1Error(true)}
+                  />
                 )}
                 {event.attendees >= 2 && (
-                  <img src={event.attendeeAvatars?.[1] || `https://i.pravatar.cc/100?img=${event.id.charCodeAt(0) % 10 + 4}`} alt="user" className="w-8 h-8 rounded-full object-cover shadow-sm ring-2 ring-black/40" />
+                  <img 
+                    src={!img2Error && event.attendeeAvatars?.[1] ? event.attendeeAvatars[1] : `https://i.pravatar.cc/100?img=${event.id.charCodeAt(0) % 10 + 4}`} 
+                    alt="user" 
+                    className="w-8 h-8 rounded-full object-cover shadow-sm ring-2 ring-black/40" 
+                    onError={() => setImg2Error(true)}
+                  />
                 )}
               </div>
               {event.attendees > 2 && (

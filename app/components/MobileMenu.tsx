@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Link from "next/link";
 import { Sun, Moon, Plus, LogIn, UserPlus, LogOut, Loader2, CalendarDays } from "lucide-react";
 import { useSession, signOut } from "@/lib/auth-client";
@@ -20,6 +21,7 @@ export default function MobileMenu({
   setShowCreateModal,
 }: MobileMenuProps) {
   const { data: session, isPending } = useSession();
+  const [imageError, setImageError] = useState(false);
 
   return (
     <div
@@ -77,8 +79,13 @@ export default function MobileMenu({
           ) : session ? (
             <div className="mt-2 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-3 shadow-sm">
               <div className="flex items-center gap-3 mb-3 px-1">
-                {session.user.image ? (
-                  <img src={session.user.image} alt={session.user.name} className="h-10 w-10 rounded-full object-cover" />
+                {session.user.image && !imageError ? (
+                  <img 
+                    src={session.user.image} 
+                    alt={session.user.name} 
+                    className="h-10 w-10 rounded-full object-cover" 
+                    onError={() => setImageError(true)}
+                  />
                 ) : (
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)] text-lg text-white">
                     {session.user.name?.charAt(0).toUpperCase() || "U"}

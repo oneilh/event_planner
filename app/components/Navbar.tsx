@@ -28,6 +28,7 @@ export default function Navbar() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const { data: session, isPending } = useSession();
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -108,11 +109,12 @@ export default function Navbar() {
                     onClick={() => setShowAuthDropdown((prev) => !prev)}
                     className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-2 text-sm font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] cursor-pointer"
                   >
-                    {session.user.image ? (
+                    {session.user.image && !imageError ? (
                       <img
                         src={session.user.image}
                         alt={session.user.name}
                         className="h-5 w-5 rounded-full object-cover"
+                        onError={() => setImageError(true)}
                       />
                     ) : (
                       <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--accent)] text-[10px] text-white">
